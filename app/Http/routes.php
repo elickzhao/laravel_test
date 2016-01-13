@@ -204,3 +204,65 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('profile',['middleware'=>'auth.basic',function(){
     echo '爱爱爱';
 }]);
+
+/*
+ * collect集合演示
+ */
+Route::get("collect",function(){
+    $collection = collect([1, 2, 3, 4, 5]);
+
+    //map是遍历整个数组 并把操作结果返回给数组
+    $multiplied = $collection->map(function ($item) {
+        return $item * 2;
+    });
+
+    //each是遍历整个集合 但是不做返回新数组动作
+//    $mu = $collection->each(function($item,$key){
+//        //$mu 是集合的实例 不是数组所以不能往里写入
+//        $mu[$key] = $item * 4;
+//        //$this->put($key,$item * 4);
+//    });
+//    dump($mu->all());
+//    return $multiplied->all();
+
+    //-----------------------------------
+
+//    $collection = collect([[1, 2, 3], [4, 5, 6], [7, 8, 9]]);
+//    $collapsed = $collection->collapse();
+//
+//    $flatten = $collection->flatten();
+//    dump($flatten->all());
+//
+//    $collection1 = collect(['name' => 'taylor', 'languages' => ['php', 'javascript']]);
+//    $flattened1 = $collection1->flatten();
+//    //这种带下标的collapse 就不可以所以记住flatten是最省事的 因为两种都能合并
+//    //$flattened1 = $collection1->collapse();
+      //注意：不同于大多数其它集合方法，transform修改集合本身，如果你想要创建一个新的集合，使用map方法。
+//    这个用法也是类似的 每个单元操作后返回给原数组
+//    $collection->transform(function ($item, $key) {
+//         return $item * 2;
+//    });
+//    dump($flattened1->all());
+//
+//    dump($collapsed->all());
+
+    //------------------------------------
+
+//    $collection = collect([5, 3, 1, 2, 4]);
+//    $sorted = $collection->sort();
+//    //只是按值升序排列但是不改变下标,下标是字符串
+//    dump($sorted->all());
+//    dump($sorted->values()->all());
+
+//    $collection = collect(['name' => 'Desk', 'price' => 200]);
+//    //好像没有区别 可能版本升级改了吧
+//    dump($collection->toArray());
+//    dump($collection->all());
+
+    //这个叫去重更合适些
+    $collection = collect([1, 1, 2, 2, 3, 4, 2]);
+    $unique = $collection->unique();
+    dump($unique->values()->all());
+
+
+});
