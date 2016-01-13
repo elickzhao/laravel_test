@@ -39,15 +39,14 @@ trait AuthenticatesUsers
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
-        //登录失败限制 是否用了这个登录trait
         $throttles = $this->isUsingThrottlesLoginsTrait();
 
         if ($throttles && $this->hasTooManyLoginAttempts($request)) {
             return $this->sendLockoutResponse($request);
         }
-        //取出只需要验证的内容
+
         $credentials = $this->getCredentials($request);
-        //手动认证用的就是这个attempt()方法
+
         if (Auth::attempt($credentials, $request->has('remember'))) {
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
@@ -68,14 +67,13 @@ trait AuthenticatesUsers
 
     /**
      * Send the response after the user was authenticated.
-     *用户通过身份验证后发送响应
+     *
      * @param  \Illuminate\Http\Request  $request
      * @param  bool  $throttles
      * @return \Illuminate\Http\Response
      */
     protected function handleUserWasAuthenticated(Request $request, $throttles)
     {
-        //请出登录失败验证次数吧??
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
@@ -149,7 +147,6 @@ trait AuthenticatesUsers
      */
     protected function isUsingThrottlesLoginsTrait()
     {
-        //dd(ThrottlesLogins::class); 显示的是类名
         return in_array(
             ThrottlesLogins::class, class_uses_recursive(get_class($this))
         );

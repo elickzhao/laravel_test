@@ -12,17 +12,17 @@ class SendEmails extends Command
      * @var string
      */
     protected $signature = '
-                            emails:send {user}
+                            email:send {user}
                             {--queue= : Whether the job should be queued}\';
                             ';
     //第二个是选项  以--开头为选项 而且有输入时的描述 :开始后为描述
 
     /**
      * The console command description.
-     *命令描述
+     *命令描述 帮助说明里显示 php artisan -h
      * @var string
      */
-    protected $description = '发送一封邮件给用户';
+    protected $description = 'send mail to user';
 
     //因为没有依赖的这个所以就先注释掉了
     //protected $drip;
@@ -45,6 +45,28 @@ class SendEmails extends Command
      */
     public function handle()
     {
+//        $name = $this->ask('what is your name');
+//        echo $name;
+
+        $userId = $this->argument('user');
+        echo $userId;
+
+        if ($this->confirm('Do you wish to continue? [y|N]')) {
+            echo "Y";
+        }else{
+            echo "N";
+        }
+
+        //在windows下也不好使
+        $this->info('Display this on the screen');
+
+        //自动完成功能 不过在windows下不好用
+//        $name1 = $this->anticipate('What is your name?', ['Taylor', 'Dayle']);
+//        echo $name1;
+
+        $name = $this->choice('What is your name?', ['Taylor', 'Dayle'], false);
+        echo $name;
+
         //然后在用类的方法执行某个操作
         // $this->drip->send(User::find($this->argument('user')));
 

@@ -229,16 +229,16 @@ class BelongsToMany extends Relation
      *
      * @param  int  $count
      * @param  callable  $callback
-     * @return void
+     * @return bool
      */
     public function chunk($count, callable $callback)
     {
         $this->query->addSelect($this->getSelectColumns());
 
-        $this->query->chunk($count, function ($results) use ($callback) {
+        return $this->query->chunk($count, function ($results) use ($callback) {
             $this->hydratePivotRelation($results->all());
 
-            call_user_func($callback, $results);
+            return $callback($results);
         });
     }
 
@@ -404,13 +404,11 @@ class BelongsToMany extends Relation
         // We need to join to the intermediate table on the related model's primary
         // key column with the intermediate table's foreign key for the related
         // model instance. Then we can set the "where" for the parent models.
-        $baseTable = $this->relationName ? $this->relationName : $this->related->getTable();
+        $baseTable = $this->related->getTable();
 
         $key = $baseTable.'.'.$this->related->getKeyName();
 
         $query->join($this->table, $key, '=', $this->getOtherKey());
-
-        //dump($key);
 
         return $this;
     }

@@ -243,6 +243,21 @@ if (! function_exists('array_pluck')) {
     }
 }
 
+if (! function_exists('array_prepend')) {
+    /**
+     * Push an item onto the beginning of an array.
+     *
+     * @param  array  $array
+     * @param  mixed  $value
+     * @param  mixed  $key
+     * @return array
+     */
+    function array_prepend($array, $value, $key = null)
+    {
+        return Arr::prepend($array, $value, $key);
+    }
+}
+
 if (! function_exists('array_pull')) {
     /**
      * Get a value from the array, and remove it.
@@ -347,7 +362,7 @@ if (! function_exists('class_basename')) {
 if (! function_exists('class_uses_recursive')) {
     /**
      * Returns all traits used by a class, its subclasses and trait of their traits.
-     *返回一个类使用的所有特征,其子类和特征的特征。
+     *
      * @param  string  $class
      * @return array
      */
@@ -442,7 +457,7 @@ if (! function_exists('e')) {
     /**
      * Escape HTML entities in a string.
      *
-     * @param  \Illuminate\Support\Htmlable|string  $value
+     * @param  \Illuminate\Contracts\Support\Htmlable|string  $value
      * @return string
      */
     function e($value)
@@ -737,11 +752,9 @@ if (! function_exists('trait_uses_recursive')) {
      */
     function trait_uses_recursive($trait)
     {
-        //获得所用的trait数组
         $traits = class_uses($trait);
 
         foreach ($traits as $trait) {
-            //有下标的数组可以相加
             $traits += trait_uses_recursive($trait);
         }
 

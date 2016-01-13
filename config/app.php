@@ -151,6 +151,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
+        Laravel\Cashier\CashierServiceProvider::class,
 
     ],
 
