@@ -14,7 +14,7 @@ class ArticleTableSeeder extends Seeder
         //没有弄数据工厂 直接使用是不行的
         //factory(\App\Article::class,5)->create();
         //https://github.com/fzaninotto/Faker
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create();   //生成一个实例
         DB::table('articles')->insert([
             'title' => $faker->title,   //这个title是指标签 并不是指标题
             'intro' => $faker->word,

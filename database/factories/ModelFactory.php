@@ -11,7 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, function (Faker\Generator $faker) {   //Faker|Generator 自动注入 本身就是一个实例
     return [
         'name' => $faker->name,
         'email' => $faker->email,
